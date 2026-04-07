@@ -1,0 +1,12 @@
+run:
+Data: 
+NIM: 231011403015
+Nama: Yane
+Nilai UTS: 80
+Nilai UAS: 90
+=========================================
+NIM	Nama	UTS	UAS	Rata2	Grade
+=========================================
+231011403015	Yane	80.0	90.0	85.0	A
+=========================================
+BUILD SUCCESSFUL (total time: 48 seconds)
