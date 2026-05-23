@@ -1,0 +1,170 @@
+/* ==========================================
+   RESET & GLOBAL STYLE 
+   ========================================== */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 20px 0;
+    color: #333333;
+}
+
+/* Mengatur bayangan dan kelengkungan tabel utama aplikasi */
+center > table {
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    border-collapse: collapse;
+}
+
+/* ==========================================
+   STYLE MENU SAMPING (SIDEBAR)
+   ========================================== */
+#menu {
+    display: block;
+    text-align: left;
+    padding: 10px;
+}
+
+#menu b {
+    display: block;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #555555;
+    margin-bottom: 8px;
+    padding-left: 5px;
+}
+
+#menu a {
+    display: block;
+    padding: 10px 15px;
+    margin-bottom: 6px;
+    color: #444444;
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+    background-color: #f5f5f5;
+    border-left: 4px solid #577927;
+    border-radius: 0 6px 6px 0;
+    transition: all 0.3s ease;
+}
+
+#menu a:hover {
+    background-color: #577927;
+    color: #ffffff;
+    padding-left: 20px; /* Efek bergeser sedikit ke kanan saat di-hover */
+    box-shadow: 0 4px 8px rgba(87, 121, 39, 0.2);
+}
+
+
+/* ==========================================
+   STYLE DROPDOWN NAVIGATION BAR (MENU ATAS)
+   ========================================== */
+nav {
+    display: block;
+    margin-bottom: 10px;
+}
+
+nav ul {
+    background: #34495e; /* Warna dasar navbar abu-abu gelap modern */
+    padding: 0 10px;
+    list-style: none;
+    position: relative;
+    display: inline-table;
+    width: 95%;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin: 10px 0;
+}
+
+nav ul:after {
+    content: ""; 
+    clear: both; 
+    display: block;
+}
+
+nav ul li {
+    float: left;
+    position: relative;
+}
+
+nav ul li a {
+    display: block;
+    padding: 12px 20px;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+/* Hover pada menu utama atas */
+nav ul li:hover > a {
+    background: #2c3e50;
+    color: #2ecc71; /* Sentuhan warna hijau terang saat diaktifkan */
+}
+
+/* Menampilkan dropdown ketika menu utama di-hover */
+nav ul li:hover > ul {
+    display: block;
+}
+
+/* Style untuk Sub-Menu (Dropdown ke bawah) */
+nav ul ul {
+    background: #2c3e50;
+    border-radius: 0 0 8px 8px;
+    padding: 0;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 180px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    display: none;
+    z-index: 999;
+}
+
+nav ul ul li {
+    float: none;
+    border-bottom: 1px solid #34495e;
+}
+
+nav ul ul li:last-child {
+    border-bottom: none;
+}
+
+nav ul ul li a {
+    padding: 10px 20px;
+    color: #ffffff;
+    font-size: 0.9rem;
+}
+
+/* Hover pada isi sub-menu dropdown */
+nav ul ul li a:hover {
+    background: #577927;
+    color: #ffffff;
+}
+
+
+/* ==========================================
+   STYLE FORM INPUT (BIAR SERASI)
+   ========================================== */
+.form-input {
+    background: #ffffff;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.form-input input[type="text"], 
+.form-input select {
+    border: 1px solid #cccccc;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
+/* Efek menyala biru/hijau lembut saat kotak input diklik */
+.form-input input[type="text"]:focus, 
+.form-input select:focus {
+    border-color: #577927;
+    outline: none;
+    box-shadow: 0 0 8px rgba(87, 121, 39, 0.3);
+}
