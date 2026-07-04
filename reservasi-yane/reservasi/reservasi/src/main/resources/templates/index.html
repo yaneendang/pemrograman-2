@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gloria Hotel - Reservasi Kamar</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts & FontAwesome Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #f4f7fa;
+            color: #2D3748;
+        }
+        .sidebar {
+            background-color: #ffffff;
+            min-height: 100vh;
+            border-right: 1px solid #E2E8F0;
+        }
+        .nav-link-custom {
+            color: #4A5568;
+            font-weight: 500;
+            padding: 12px 20px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            transition: all 0.2s;
+            margin-bottom: 5px;
+        }
+        .nav-link-custom:hover, .nav-link-custom.active {
+            background-color: #ebf8ff;
+            color: #2b6cb0;
+        }
+        .card {
+            border: none;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+            background: #ffffff;
+        }
+        .card-header-custom {
+            background: transparent;
+            padding: 20px 20px 0 20px;
+            border: none;
+        }
+        .form-label {
+            font-weight: 500;
+            font-size: 0.875rem;
+            color: #4A5568;
+            margin-bottom: 6px;
+        }
+        .form-control, .form-select {
+            border-radius: 10px;
+            border: 1px solid #E2E8F0;
+            padding: 10px 14px;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+        }
+        .form-control:focus, .form-select:focus {
+            border-color: #3182ce;
+            box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.15);
+        }
+        .btn-gradient {
+            background: linear-gradient(135deg, #3182ce, #2b6cb0);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 12px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        .btn-gradient:hover {
+            background: linear-gradient(135deg, #2b6cb0, #2c5282);
+            color: white;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(49, 130, 206, 0.3);
+        }
+        .table-responsive-custom {
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #E2E8F0;
+        }
+        .table {
+            margin-bottom: 0;
+        }
+        .table thead {
+            background-color: #F8FAFC;
+        }
+        .table th {
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #718096;
+            padding: 16px;
+            border-bottom: 1px solid #E2E8F0;
+        }
+        .table td {
+            padding: 16px;
+            vertical-align: middle;
+            color: #4A5568;
+            font-size: 0.95rem;
+            border-bottom: 1px solid #E2E8F0;
+        }
+        .badge-room {
+            background-color: #ebf8ff;
+            color: #2b6cb0;
+            font-weight: 600;
+            padding: 6px 12px;
+            border-radius: 6px;
+        }
+        .alert-custom {
+            border-radius: 12px;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container-fluid">
+    <div class="row">
+        <!-- Sidebar Menu (Tetap Menetap Sesuai Request) -->
+        <div class="col-md-3 col-lg-2 sidebar p-3 d-none d-md-block">
+            <div class="fs-4 fw-bold mb-4 text-primary px-2">
+                <i class="fa-solid fa-hotel me-2"></i>Gloria Hotel
+            </div>
+            <div class="small text-muted fw-bold mb-2 px-2 text-uppercase">Menu Utama</div>
+            <a href="/dashboard" class="nav-link-custom">
+                <i class="fa-solid fa-chart-pie me-3"></i>Dashboard
+            </a>
+            <a href="/reservasi" class="nav-link-custom active">
+                <i class="fa-solid fa-calendar-check me-3"></i>Reservasi Kamar
+            </a>
+            <hr class="text-muted">
+            <a href="/logout" class="nav-link-custom text-danger">
+                <i class="fa-solid fa-arrow-right-from-bracket me-3"></i>Sign Out
+            </a>
+        </div>
+
+        <!-- Main Content Panel -->
+        <div class="col-md-9 col-lg-10 p-4">
+            
+            <!-- Notifikasi Exception -->
+            <div th:if="${error}" class="alert alert-danger alert-custom alert-dismissible fade show shadow-sm mb-4" role="alert">
+                <div class="d-flex align-items-center">
+                    <i class="fa-solid fa-circle-exclamation me-3 fs-5"></i>
+                    <span th:text="${error}">Pesan Error</span>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            
+            <div th:if="${param.success}" class="alert alert-success alert-custom alert-dismissible fade show shadow-sm mb-4" role="alert">
+                <div class="d-flex align-items-center">
+                    <i class="fa-solid fa-circle-check me-3 fs-5"></i>
+                    <span>Data reservasi berhasil diproses dan disimpan ke sistem.</span>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+
+            <div class="row g-4">
+                <!-- Input Panel Form -->
+                <div class="col-xl-4">
+                    <div class="card h-100">
+                        <div class="card-header-custom">
+                            <h5 class="fw-bold m-0 text-dark">Buat Reservasi</h5>
+                            <p class="text-muted small mb-3">Isi rincian informasi tamu di bawah ini.</p>
+                        </div>
+                        <div class="card-body pt-2">
+                            <form th:action="@{/reservasi/save}" th:object="${reservasi}" method="POST">
+                                <div class="mb-3">
+                                    <label class="form-label">Nama Lengkap Tamu</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-transparent border-end-0 text-muted"><i class="fa-regular fa-user"></i></span>
+                                        <input type="text" th:field="*{namaTamu}" class="form-control border-start-0" placeholder="Contoh: Gloria" required>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label class="form-label">Pilihan Kategori Kamar</label>
+                                    <select name="tipeKamar" id="tipeKamar" class="form-select" required>
+                                        <option value="" disabled selected>-- Pilih Tipe Kamar --</option>
+                                        <option value="Standard">Standard Room</option>
+                                        <option value="Deluxe">Deluxe Room</option>
+                                        <option value="Suite">Suite Room</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="row g-2 mb-4">
+                                    <div class="col-6">
+                                        <label class="form-label">Check-In</label>
+                                        <input type="date" th:field="*{tanggalCheckIn}" class="form-control" required>
+                                    </div>
+                                    <div class="col-6">
+                                        <label class="form-label">Check-Out</label>
+                                        <input type="date" th:field="*{tanggalCheckOut}" class="form-control" required>
+                                    </div>
+                                </div>
+                                
+                                <button type="submit" class="btn btn-gradient w-100">
+                                    <i class="fa-regular fa-paper-plane me-2"></i>Konfirmasi Pesanan
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Data List Panel Table -->
+                <div class="col-xl-8">
+                    <div class="card h-100">
+                        <div class="card-header-custom mb-3">
+                            <h5 class="fw-bold m-0 text-dark">Manifest Reservasi Aktif</h5>
+                            <p class="text-muted small mb-0">Daftar manifestasi seluruh kamar yang terisi saat ini.</p>
+                        </div>
+                        <div class="card-body table-responsive">
+                            <div class="table-responsive-custom">
+                                <table class="table align-middle">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Identitas Tamu</th>
+                                            <th>Kategori Kamar</th>
+                                            <th>Check-In</th>
+                                            <th>Check-Out</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="res : ${daftarReservasi}">
+                                            <td class="fw-bold text-secondary" th:text="'#' + ${res.id}">#1</td>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="bg-light text-primary rounded-circle p-2 me-2 text-center" style="width: 35px; height: 35px; line-height: 18px;">
+                                                        <i class="fa-solid fa-user-tie"></i>
+                                                    </div>
+                                                    <span class="fw-semibold text-dark" th:text="${res.namaTamu}">Nama</span>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <span class="badge-room" th:text="${res.tipeKamar}">Tipe</span>
+                                            </td>
+                                            <td th:text="${res.tanggalCheckIn}">2026-07-04</td>
+                                            <td th:text="${res.tanggalCheckOut}">2026-07-05</td>
+                                        </tr>
+                                        <tr th:if="${#lists.isEmpty(daftarReservasi)}">
+                                            <td colspan="5" class="text-center py-5 text-muted">
+                                                <i class="fa-solid fa-inbox d-block fs-2 mb-3 text-neutral-400"></i>
+                                                Belum ada manifestasi data reservasi terdaftar.
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

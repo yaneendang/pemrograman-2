@@ -1,0 +1,12 @@
+{
+    "elements": {
+        "option": {}
+    },
+    "attributes": {
+        "th:if": {},
+        "th:text": {},
+        "th:action": {},
+        "th:field": {},
+        "th:each": {}
+    }
+}
